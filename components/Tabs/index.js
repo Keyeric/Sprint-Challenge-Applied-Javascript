@@ -7,3 +7,25 @@
 //
 //  The tab component should look like this:
 //    <div class="tab">topic here</div>
+const entryTab = document.querySelector(".topics");
+axios
+.get("https://lambda-times-backend.herokuapp.com/topics")
+.then(response => {
+  console.log(response)
+  console.log(response.data)
+//   response.forEach(data => {
+    // console.log(data)
+    entryTab.append(topicCard(response.data));
+  })
+// })
+.catch(error => {
+  console.log("Error encountered:", error);
+});
+
+function topicCard(API){
+    const topic = document.createElement("div");
+    topic.classList.add("tab");
+    topic.textContent = API.topics;
+
+    return topic;
+}
