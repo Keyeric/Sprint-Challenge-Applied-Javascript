@@ -17,3 +17,44 @@
 // </div>
 //
 // Create a card for each of the articles and add the card to the DOM.
+ const entryCard = document.querySelector(".cards-container");
+ axios.get("https://lambda-times-backend.herokuapp.com/articles")
+ .then(response => {
+    // console.log(response.data.articles.javascript);
+    response.data.articles.javascript.forEach(data => {
+        // console.log(data)
+        entryCard.append(topicCard(data));
+    })
+ })
+.catch(error => {
+    console.log("Error encountered:", error);
+  });
+
+function topicCard(APEye){
+    const card = document.createElement("div");
+    card.classList.add("card");
+    
+    const cardHeadline = document.createElement("div");
+    cardHeadline.classList.add("headline")
+    card.append(cardHeadline);
+    cardHeadline.textContent = APEye.headline;
+
+    const cardAuthor = document.createElement("div");
+    cardAuthor.classList.add("author");
+    card.append(cardAuthor);
+
+    const authorImg = document.createElement("div");
+    authorImg.classList.add("img-container")
+    cardAuthor.append(authorImg);
+
+    const authorFace = document.createElement("img");
+    authorImg.append(authorFace)
+    authorFace.setAttribute("src", APEye.authorPhoto);
+
+    const cardSpan = document.createElement("span");
+    cardAuthor.append(cardSpan);
+    cardSpan.textContent = `By ${APEye.authorName}`
+
+    
+    return card;
+}
